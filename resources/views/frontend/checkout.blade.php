@@ -82,8 +82,8 @@
                     <aside class="col-xl-4">
                         <div class="row g-4 mb-3">
                             <div class="col-md-6 col-xl-12">
-                                <div class="card bg-secondary rounded-2 mb-3">
-                                    <div class="card-header border-bottom bg-secondary">
+                                <div class="card  rounded-2 mb-3">
+                                    <div class="card-header ">
                                         <h5 class="card-title mb-0">Votre réservation</h5>
                                     </div>
 
@@ -106,7 +106,7 @@
                                         </ul>
                                     </div>
 
-                                    <div class="card-footer border-top bg-secondary">
+                                    <div class="card-footer  ">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="h5 fw-normal mb-0">Sous-total</span>
                                             <span class="h5 fw-normal mb-0">{{ number_format($price, 0, '', ' ') }} FCFA</span>

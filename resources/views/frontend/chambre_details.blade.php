@@ -2,8 +2,118 @@
 
 @section('content')
 
+  <!-- Page Header Start -->
+  <div class="container-fluid page-header mt-5 mb-5 p-0" style="background-image: url({{asset('assets/img/carousel-1.jpg')}});">
+    <div class="container-fluid page-header-inner py-5">
+        <div class="container text-center pb-5">
+            <br><br>
+            <h1 class="display-5 text-white mb-3 animated slideInDown">{{ $chambre->name }}</h1>
+            
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
 
-<section class="container mt-5 mb-lg-5 mb-4 pt-5 pb-lg-5">
+
+<div class="container-xxl py-5">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8">
+        <div id="room-carousel" class="carousel slide mb-5 wow fadeIn" data-bs-ride="carousel" data-wow-delay="0.1s">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="w-100" src="{{ asset($chambre->thumbnail_img) }}" alt="Image" />
+            </div>
+            @foreach($chambre->photos as $photo)
+              <div class="carousel-item">
+                <img class="w-100" src="{{ asset($photo->fille_name) }}" alt="Image" />
+              </div>
+            @endforeach
+
+
+
+            
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#room-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Precedent</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#room-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Suivant</span>
+          </button>
+        </div>
+        <div class="d-flex align-items-center mb-4">
+          <h2 class="mb-0">{{ $chambre->name }}</h2>
+         
+        </div>
+        <div class="d-flex flex-wrap pb-4 m-n1">
+          <small class="bg-light rounded py-1 px-3 m-1"><i class="fa fa-bed text-primary me-2"></i>3 lits</small>
+          <small class="bg-light rounded py-1 px-3 m-1"><i class="fa fa-bath text-primary me-2"></i>2 salles de bain</small>
+          <small class="bg-light rounded py-1 px-3 m-1"><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+          <small class="bg-light rounded py-1 px-3 m-1"><i class="fa fa-tv text-primary me-2"></i>TV</small>
+          <small class="bg-light rounded py-1 px-3 m-1"><i class="fa fa-fan text-primary me-2"></i>AC</small>
+          <small class="bg-light rounded py-1 px-3 m-1"><i class="fa fa-user-cog text-primary me-2"></i>Lessive</small>
+          <small class="bg-light rounded py-1 px-3 m-1"><i class="fa fa-utensils text-primary me-2"></i>Dîner</small>
+        </div>
+        <p>{{ $chambre->description }}</p>
+     
+      </div>
+
+      <div class="col-lg-4">
+
+        <form action="{{ route('chambre.checkout', ['id'=> $chambre->id]) }}" method="post">
+            @csrf
+            <input type="hidden" name="chambre_id" value="{{ $chambre->id }}">
+          <div class="bg-light mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="border-bottom text-center text-dark p-3 pt-4 mb-3">
+              
+              <span class="align-middle fs-1 lh-sm fw-bold">{{ number_format($chambre->price, 0, '', ' ') }} FCFA</span>
+              <span class="align-bottom fs-6 lh-lg"><br> par semaines</span>
+            </div>
+            <div class="row g-3 p-4 pt-2">
+              <div class="col-12">
+                <div class="date" id="date3" data-target-input="nearest">
+                    Date d'arrivée
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="date" id="date4" data-target-input="nearest">
+                  <input type="text"  name="date_start"  class="form-control datetimepicker-input" placeholder="Check out" data-target="#date4" data-toggle="datetimepicker" />
+                </div>
+              </div>
+              <div class="col-12">
+                <div>
+                  Nombre de semaines
+                </div>
+              </div>
+              <div class="col-12">
+                <input type="number"  name="total_week" class="form-control " placeholder="" />
+              </div>
+              <div class="col-12">
+              <br><br>
+              </div>
+              <div class="col-12">
+                <button type="submit"class="btn btn-primary py-3 w-100">Reserver</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      
+
+   
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+{{-- <section class="container mt-5 mb-lg-5 mb-4 pt-5 pb-lg-5">
     <nav class="mb-3 pt-md-3" aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Acceuil</a></li>
@@ -85,7 +195,7 @@
                 <div class="mb-3">
                     <label class="form-label">Date de départ <span class="text-danger">*</span></label>
                     <div class="input-group input-group-lg">
-                    <input class="form-control date-picker rounded pe-5" name="date_start" type="text" id="pr-birth-date" placeholder="Choisissez une date" data-datepicker-options="{&quot;altInput&quot;: true, &quot;altFormat&quot;: &quot;F j, Y&quot;, &quot;dateFormat&quot;: &quot;Y-m-d&quot;}">
+                    <input class="form-control date-picker rounded pe-5" type="text" id="pr-birth-date" placeholder="Choisissez une date" data-datepicker-options="{&quot;altInput&quot;: true, &quot;altFormat&quot;: &quot;F j, Y&quot;, &quot;dateFormat&quot;: &quot;Y-m-d&quot;}">
                     <i class="fi-calendar text-muted position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                 </div>
@@ -101,6 +211,6 @@
         </div>
       </aside>
     </div>
-  </section>
+</section> --}}
 
-  @endsection
+@endsection
