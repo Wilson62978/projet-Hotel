@@ -103,13 +103,7 @@
         <!-- Room End -->
 
 
-        <!-- Testimonial Start -->
-        <div >
-            <div class="container mt-5">
-             <br> <br>
-            </div>
-        </div>
-        <!-- Testimonial End -->
+      >
 
 
 
