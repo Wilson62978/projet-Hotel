@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $chambres = Chambre::where('published', 1)->get();
+        $chambres = Chambre::where('published', 1)->limit(3)->get();
 
         return view('frontend.index', compact('chambres'));
     }
