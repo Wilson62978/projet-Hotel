@@ -33,6 +33,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+    @livewireStyles
 </head>
 
 <body>
@@ -56,6 +57,7 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
+    @livewireScripts
     <script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('assets/lib/wow/wow.min.js')}}"></script>

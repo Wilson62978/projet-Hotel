@@ -33,13 +33,18 @@ class HomeController extends Controller
 
     public function checkout(Request $request)
     {
-        // dd($request);
-        $chambre = Chambre::findOrFail($request->chambre_id);
-        $date_start = date('d-m-Y', strtotime($request->date_start));
-        $date_end = date('d-m-Y', strtotime($request->date_start . "+" . 7 * $request->total_week . " days"));
-        $price = $chambre->price * $request->total_week;
-        $total_week = $request->total_week;
-        return view('frontend.checkout', compact('chambre', 'date_start', 'date_end', 'price', 'total_week'));
+       
+        $chambre = $request->session()->get('chambre');
+        $date_start =$request->session()->get('date_start');
+        $date_end =$request->session()->get('date_end');
+        $price = $request->session()->get('price');
+        $total_week = $request->session()->get('total_week');
+        $pourcentage = $request->session()->get('pourcentage');
+        $price_ttc = $request->session()->get('price_ttc');
+        $reduction = $request->session()->get('reduction');
+        $tva=  $request->session()->get('tva');
+
+        return view('frontend.checkout', compact('chambre', 'date_start', 'date_end', 'price', "tva", "reduction",'total_week',"pourcentage",'price_ttc',"reduction"));
     }
 
     public function booknow(Request $request)

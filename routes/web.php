@@ -23,7 +23,7 @@ Route::get('/chambres', [HomeController::class, 'chambres'])
 Route::get('/chambres/{slug}', [HomeController::class, 'firstChambre'])
     ->name('chambres.first');
 
-Route::post('chambre-checkout/{id}', [HomeController::class, 'checkout'])
+Route::get('chambre-checkout/{id}', [HomeController::class, 'checkout'])
     ->name('chambre.checkout');
 
 Route::post('/chambres/booknow', [HomeController::class, 'booknow'])

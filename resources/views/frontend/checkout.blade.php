@@ -75,6 +75,24 @@
                                     <label class="form-label">Email <span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" name="email" min="1" placeholder="Email">
                                 </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Numéro de téléphone <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="" min="1" placeholder="Numéro de téléphone">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nationalité <span class="text-danger">*</span></label>
+                                    <select class="form-select {{ $errors->has('nationalite_id') ? 'is-invalid' : '' }}" id="nationalite_id" name="nationalite_id" >
+                                        <option >Selectionnez l'évenement</option>
+                                        {{-- @foreach ($evenements as $evenement)
+                                            <option value="{{ $evenement->id }}"  
+                                                @if (old('evenement_id') == $evenement->id || $type == $evenement->slug  ) selected 
+                                                @endif
+                                            >
+                                            {{ $evenement->titre }}
+                                            </option>
+                                        @endforeach --}}
+                                    </select> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,13 +121,26 @@
                                                 <span class="h6 fw-normal mb-0">Prix:</span>
                                                 <span class="fs-5">{{ number_format($price, 0, '', ' ') }} FCFA</span>
                                             </li>
+                                            @if ($pourcentage!==0)
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span class="h6 fw-normal mb-0">Réduction:</span>
+                                                    <span class="fs-5">{{ number_format($reduction, 0, '', ' ') }} FCFA</span>
+                                                </li>
+                                               
+                                            @endif
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span class="h6 fw-normal mb-0">TVA:</span>
+                                                <span class="fs-5">{{ number_format($tva, 0, '', ' ') }} FCFA</span>
+                                            </li>
+
+                                           
                                         </ul>
                                     </div>
 
                                     <div class="card-footer  ">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <span class="h5 fw-normal mb-0">Sous-total</span>
-                                            <span class="h5 fw-normal mb-0">{{ number_format($price, 0, '', ' ') }} FCFA</span>
+                                            <span class="h5 fw-normal mb-0">Sous-total(TTC)</span>
+                                            <span class="h5 fw-normal mb-0">{{ number_format($price_ttc, 0, '', ' ') }} FCFA</span>
                                         </div>
                                     </div>
                                 </div>

@@ -24,7 +24,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->cascadeOnDelete()
-                ->restrictOnUpdate();
+                ->restrictOnUpdate()->nullable();
             $table->unsignedBigInteger('chambre_id');
             $table->foreign('chambre_id')
                 ->references('id')
@@ -37,6 +37,21 @@ return new class extends Migration
                 ->on('methode_payements')
                 ->cascadeOnDelete()
                 ->restrictOnUpdate();
+            $table->string("nom");
+            $table->string("prenom");
+            $table->string("email");
+            $table->string("numero");
+            $table->unsignedBigInteger('nationalite_id');
+            $table->foreign('nationalite_id')
+            ->references('id')
+            ->on('nationalites')
+            ->cascadeOnDelete()
+            ->restrictOnUpdate();
+            $table->string("numeroCarte");
+            $table->string("cvvCvc");
+            $table->string("nomTitulaire");
+            $table->date("dateExpiration");
+
         });
     }
 

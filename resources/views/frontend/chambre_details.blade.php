@@ -62,7 +62,7 @@
 
       <div class="col-lg-4">
 
-        <form action="{{ route('chambre.checkout', ['id'=> $chambre->id]) }}" method="post">
+        {{-- <form action="{{ route('chambre.checkout', ['id'=> $chambre->id]) }}" method="post">
             @csrf
             <input type="hidden" name="chambre_id" value="{{ $chambre->id }}">
           <div class="bg-light mb-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -98,7 +98,9 @@
               </div>
             </div>
           </div>
-        </form>
+        </form> --}}
+        @livewire('post-boo-k', ['chambre' => $chambre])
+       
 
       
 
