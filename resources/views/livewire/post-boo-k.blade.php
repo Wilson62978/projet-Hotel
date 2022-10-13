@@ -7,7 +7,7 @@
         <div class="mb-3">
             <label class="form-label">Date d'arrivée <span class="text-danger">*</span></label>
             <div class="input-group input-group-lg">
-            <input class="form-control date-picker rounded pe-5 {{ $errors->has('date_start') ? ' is-invalid' : ''}}"  wire:model="date_start" type="text" id="pr-birth-date" placeholder="Choisissez une date" data-datepicker-options="{&quot;altInput&quot;: true, &quot;altFormat&quot;: &quot;F j, Y&quot;, &quot;dateFormat&quot;: &quot;Y-m-d&quot;}">
+            <input class="form-control date-picker rounded pe-5 {{ $errors->has('date_start') ? ' is-invalid' : ''}}"  type="text" id="pr-birth-date" placeholder="Choisissez une date"  wire:model="date_start"  data-datepicker-options="{&quot;altInput&quot;: true, &quot;altFormat&quot;: &quot;F j, Y&quot;, &quot;dateFormat&quot;: &quot;Y-m-d&quot;}">
             <i class="fi-calendar text-muted position-absolute top-50 end-0 translate-middle-y me-3"></i>
             </div>
             @if ($errors->has('date_start'))
