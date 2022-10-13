@@ -65,17 +65,16 @@
                 <div class="card-body">
                     <h5>Équipements</h5>
                     <ul class="list-unstyled row row-cols-md-2 row-cols-1 gy-2 mb-0 text-nowrap">
-                    <li class="col">Non fumeur</li>
-                    <li class="col">Climatiseur</li>
-                    <li class="col">Mini bar</li>
-                    <li class="col">Coffre Fort</li>
-                    <li class="col">Douche</li>
-                    <li class="col">Seche Cheveux</li>
-                    <li class="col">Baignoire</li>
-                    <li class="col">Télévision à écran plat</li>
-                    <li class="col">Accessible aux personnes a mobilité réduite</li>
+                        <li class="col">Non fumeur</li>
+                        <li class="col">Climatiseur</li>
+                        <li class="col">Mini bar</li>
+                        <li class="col">Coffre Fort</li>
+                        <li class="col">Douche</li>
+                        <li class="col">Seche Cheveux</li>
+                        <li class="col">Baignoire</li>
+                        <li class="col">Télévision à écran plat</li>
+                        <li class="col">Accessible aux personnes a mobilité réduite</li>
                     </ul>
-                    <a class="collapse-label collapsed d-inline-block mt-3" href="#seeMoreAmenities" data-bs-toggle="collapse" data-bs-label-collapsed="Voir plus" data-bs-label-expanded="Show less" role="button" aria-expanded="false" aria-controls="seeMoreAmenities"></a>
                 </div>
             </div>
             
