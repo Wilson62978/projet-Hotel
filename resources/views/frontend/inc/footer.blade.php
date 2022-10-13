@@ -29,29 +29,23 @@
           </div>
           <div class="col-lg-5 col-md-12">
               <div class="row gy-5 g-4">
-                  <div class="col-md-6">
-                      <h6 class="section-title text-start text-primary text-uppercase mb-4">Menu</h6>
-                      <a class="btn btn-link" href="{{ route('home') }}">Accueil</a>
-                      <a class="btn btn-link" href="{{ route('chambres.all') }}">Chambres</a>
-                      <a class="btn btn-link" href="{{route("cotations.create")}}">Evenements</a>
-                      
-                      
-                  </div>
-                  <div class="col-md-6">
-                      <h6 class="section-title text-start text-primary text-uppercase mb-4">Restez connecté</h6>
-                      <div class=" ">
-                        <h3 class="h4 text-light"></h3>
-                        <form class="form-group form-group-light rounded-pill" >
-                          <div class="input-group input-group-sm"><span class="input-group-text text-muted"><i class="fa fa-envelope"></i></span>
-                            <input class="form-control" type="email" placeholder="Votre email">
-                          </div>
-                          <button class="btn mt-2 btn-primary btn-sm rounded-pill" type="button">Souscrire</button>
+                    <div class="col-md-6">
+                        <h6 class="section-title text-start text-primary text-uppercase mb-4">Menu</h6>
+                        <a class="btn btn-link" href="{{ route('home') }}">Accueil</a>
+                        <a class="btn btn-link" href="{{ route('chambres.all') }}">Chambres</a>
+                        <a class="btn btn-link" href="{{route("cotations.create")}}">Evenements</a>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="section-header text-start pb-4">
+                            <h6 class="section-title text-start text-primary text-uppercase mb-4">Restez connecté</h6>
+                        </div>
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control border-white p-3" placeholder="Email">
+                                <button class="btn btn-primary">Souscrire</button>
+                            </div>
                         </form>
-                      </div>
-                        @foreach (h_evenements() as $h_item)
-                            <a class="btn btn-link" href="{{route("cotations.view",["slug"=>$h_item->slug])}}">{{$h_item->titre}}</a>
-                        @endforeach
-                  </div>
+                    </div>
               </div>
           </div>
       </div>
@@ -61,15 +55,11 @@
           <div class="row">
               <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                   &copy; <a class="border-bottom" href="{{ route('home') }}">Guest house CICA</a>, Tous droit reservées. 
-    
-   
-                  
               </div>
               <div class="col-md-6 text-center text-md-end">
                   <div class="footer-menu">
                       <a href="#">Accueil</a>
                       <a href="#">Chambre</a>
-                      
                   </div>
               </div>
           </div>
