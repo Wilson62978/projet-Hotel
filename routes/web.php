@@ -26,8 +26,8 @@ Route::get('/chambres/{slug}', [HomeController::class, 'firstChambre'])
 Route::get('chambre-checkout/{id}', [HomeController::class, 'checkout'])
     ->name('chambre.checkout');
 
-Route::post('/chambres/booknow', [HomeController::class, 'booknow'])
-    ->name('booknow');
+Route::get('/reserver-chambres', [HomeController::class, 'booknow'])
+    ->name('reserver');
 
 Route::get('/cotations/demande', [HomeController::class, 'cotationCreate'])
     ->name('cotations.create');

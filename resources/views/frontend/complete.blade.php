@@ -12,7 +12,7 @@
           <p class="fs-sm">You will be receiving an email shortly with confirmation of your order. <u>Vous pouvez maintenant :</u>
         </p>
         <a class="btn btn-primary mt-3" href="{{ route('home') }}">
-            <i class="ci-location"></i>&nbsp;Retouner à l'accueil</a>
+            <i class="ci-location"></i>&nbsp;Retour à l'accueil</a>
         </div>
       </div>
     </div>

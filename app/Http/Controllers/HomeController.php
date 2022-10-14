@@ -34,6 +34,8 @@ class HomeController extends Controller
     public function checkout(Request $request)
     {
        
+        if(!$request->session()->get('chambre')) return redirect()->route("home");
+
         $chambre = $request->session()->get('chambre');
         $date_start =$request->session()->get('date_start');
         $date_end =$request->session()->get('date_end');
@@ -47,9 +49,12 @@ class HomeController extends Controller
         return view('frontend.checkout', compact('chambre', 'date_start', 'date_end', 'price', "tva", "reduction",'total_week',"pourcentage",'price_ttc',"reduction"));
     }
 
-    public function booknow(Request $request)
-    {
-        // dd($request);
+    public function booknow()
+    {   
+        if(!session()->get('booking_success')) return redirect()->route("home");
+
+        session()->forget("booking_success");
+       
         return view('frontend.complete');
     }
 

@@ -18,40 +18,42 @@ return new class extends Migration
             $table->timestamps();
             $table->dateTime("dateDebut");
             $table->dateTime("dateFin");
-            $table->unsignedBigInteger("motant");
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger("montant");
+            $table->unsignedBigInteger('user_id')
+                ->nullable();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->cascadeOnDelete()
-                ->restrictOnUpdate()->nullable();
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
             $table->unsignedBigInteger('chambre_id');
             $table->foreign('chambre_id')
                 ->references('id')
                 ->on('chambres')
                 ->cascadeOnDelete()
                 ->restrictOnUpdate();
-            $table->unsignedBigInteger('methodePayement_id');
+            $table->unsignedBigInteger('methodePayement_id')
+                ->nullable();;
             $table->foreign('methodePayement_id')
                 ->references('id')
                 ->on('methode_payements')
-                ->cascadeOnDelete()
-                ->restrictOnUpdate();
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
             $table->string("nom");
             $table->string("prenom");
             $table->string("email");
             $table->string("numero");
-            $table->unsignedBigInteger('nationalite_id');
+            $table->unsignedBigInteger('nationalite_id')
+                ->nullable();;
             $table->foreign('nationalite_id')
-            ->references('id')
-            ->on('nationalites')
-            ->cascadeOnDelete()
-            ->restrictOnUpdate();
+                ->references('id')
+                ->on('nationalites')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
             $table->string("numeroCarte");
             $table->string("cvvCvc");
             $table->string("nomTitulaire");
             $table->date("dateExpiration");
-
         });
     }
 
