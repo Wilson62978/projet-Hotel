@@ -97,7 +97,7 @@
                 <h6 class="section-title text-start text-white text-uppercase mb-3">VIE DE LUXE</h6>
                 <h1 class="text-white mb-4">Réunions et Evénements</h1>
                 <p class="text-white mb-4">Pour tous types d'événements, notre équipe experte saura vous accompagner dans la réalisation de votre projet à travers des espaces idéalement conçus, équipés de technologies de pointe.</p>
-                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3">Demande de cotation</a>
+                <a href="{{route("cotations.create")}}" class="btn btn-primary py-md-3 px-md-5 me-3">Demande de cotation</a>
             </div>
         </div>
         <div class="col-lg-6" style="min-height: 350px;">
@@ -118,7 +118,7 @@
             <p class="mb-4">
                 Découvrez de nouvelles saveurs appétissantes et testez le riche patrimoine culinaire de l'Afrique. Le restaurant et le bar servent des spécialités régionales à base d'ingrédients locaux pour revisiter la cuisine traditionnelle africaine.
             </p>
-            <a class="btn btn-primary py-3 px-5 mt-2" href="">Demande de cotation</a>
+            <a class="btn btn-primary py-3 px-5 mt-2" href="{{route("cotations.create")}}">Demande de cotation</a>
         </div>
     </div>
 </section>

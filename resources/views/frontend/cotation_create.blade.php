@@ -1,43 +1,26 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-<div class="page-title-overlap bg-dark pt-4">
-    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
-      <div class="order-lg-2  mb-lg-0 pt-lg-2">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-            <li class="breadcrumb-item"><a class="text-nowrap" href="{{ route('home') }}"><i class="ci-home"></i>Acceuil</a></li>
-            <li class="breadcrumb-item text-nowrap active" aria-current="page">Devenir membre</li>
-          </ol>
-        </nav>
-      </div>
-      <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-        <h1 class="h3 text-light mb-0">Devenir membre</h1>
-      </div>
+<div class="container-fluid page-header mt-5 mb-5 p-0" style="background-image: url({{asset('assets/img/meetings-and-events-3.jpg')}});">
+    <div class="container-fluid page-header-inner py-5">
+        <div class="container text-center pb-5">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Réunions et Evénements</h1>
+        </div>
     </div>
 </div>
-<div class="container mt-6 mb-md-4 py-5">
+<div class="container mt-6 mb-md-4">
     @if(Session::has('success'))
-
-    <div class="row justify-content-center pb-sm-2">
-        <div class="col-lg-12 col-xl-12">
-      
-        
-     
-
-        <div class="card card-body col-8 m-auto border-0 shadow-sm shadow-lg shadow-md p-4 mb-4 mt-4 row" id="basic-info">
-            <h4 class="text-center">Votre demande a été enregistrée avec succes</h4>
-           
-            <p class="alert alert-success">
-                Merci  de nous avoir fait confiance! Votre demande sera traitée minutieusement dans un bref delai.
-            </p>
+        <div class="row justify-content-center pb-sm-2">
+            <div class="col-lg-12 col-xl-12">
+                <div class="card card-body col-8 m-auto border-0 shadow-sm shadow-lg shadow-md p-4 mb-4 mt-4 row" id="basic-info">
+                    <h4 class="text-center">Votre demande a été enregistrée avec succes</h4>
+                    <p class="alert alert-success">
+                        Merci  de nous avoir fait confiance! Votre demande sera traitée minutieusement dans un bref delai.
+                    </p>
+                </div>
+            </div>
         </div>
-       
-        </div>
-    </div>
-        
     @else
-
         <form action="{{route("cotations.store")}}" method="post">
             @csrf
             <div class="row justify-content-center pb-sm-2">
@@ -56,8 +39,6 @@
                     </p>
                 </div>
                 <div class="card card-body border-0 shadow-sm shadow-lg shadow-md p-4 mb-4 row" id="basic-info">
-                    {{-- <h2 class="h4 mb-4"><i class="fi-info-circle text-primary fs-5 mt-n1 me-2"></i>Informations de réservation</h2> --}}
-                
                     <div class="row">
                         <div class="mb-3 col-md-4 ">
                             <label class="form-label" for="nom">Nom <span class="text-danger">*</span></label>
@@ -146,7 +127,6 @@
                                 @endif>
                                 <label class="form-label"class="form-check-label" for="hebergement1">Oui</label>
                             </div>
-                                
                         </div>
             
                         <div class="mb-3 col-md-12 ">
@@ -159,18 +139,13 @@
                             @endif       
                         </div>
 
-                        <div class="d-flex flex-column flex-sm-row bg-light  ">
+                        <div class="d-flex flex-column flex-sm-row">
                             <button type="submit" class="btn btn-primary btn-lg r ms-sm-auto" >Continuer
                                 <i class="fi-chevron-right fs-sm ms-2"></i>
                             </button>
                         </div>
                     </div>
-                
-                
                 </div>
-
-            
-            
                 </div>
             </div>
         </form>

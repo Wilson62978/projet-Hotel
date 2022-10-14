@@ -34,17 +34,7 @@
               <li class="tns-thumbnail"><img src="{{ asset('assets/img/real-estate/single/th12.jpg') }}" alt="Thumbnail"></li>
             </ul>
           </div>
-          {{-- <!-- Page title + Features-->
-          <div class="order-lg-2 order-1">
-            <h1 class="h4 mb-2">{{ $evenement->titre }}</h1>
 
-            <div class="h5 justify-content-between align-items-center">
-                <span class="fs-base fw-normal text-body text-center">Prix à partir de:</span>
-                <span class="fs-4">
-                  1 000 FCFA
-                </span>
-            </div>
-          </div>  --}}
        </div>
         <div class="pb-4">
             <br>

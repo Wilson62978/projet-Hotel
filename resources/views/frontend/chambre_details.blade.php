@@ -77,8 +77,9 @@
                     </ul>
                 </div>
             </div>
+
+            <livewire:post-boo-k :chambre="$chambre">
             
-            @livewire('post-boo-k', ['chambre' => $chambre])
         </div>
     </div>
 </div>

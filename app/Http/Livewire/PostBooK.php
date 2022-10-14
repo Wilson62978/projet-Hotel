@@ -8,17 +8,10 @@ use Livewire\Component as Component;
 
 class PostBooK extends Component
 {
-
-
-
-
     public $chambre_id;
-
     public $date_start;
     public $total_week;
     public $chambre;
-
-
 
     protected $rules = [
 
@@ -28,15 +21,9 @@ class PostBooK extends Component
 
     ];
 
-
-
-
-
-
     public function submit()
 
     {
-
         $this->validate();
 
         $chambre = Chambre::findOrFail($this->chambre_id);
