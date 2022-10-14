@@ -6,15 +6,16 @@
         <h2 class="h4 mb-4"><i class="fi-info-circle text-primary fs-5 mt-n1 me-2"></i>Informations de réservation</h2>
         <div class="mb-3">
             <label class="form-label">Date d'arrivée <span class="text-danger">*</span></label>
-            <div class="input-group {{ $errors->has('date_start') ? ' is-invalid' : ''}} input-group-lg">
-            <input readonly="readonly" class="form-control date-picker rounded pe-5 "  type="text" id="pr-birth-date" placeholder="Choisissez une date"  wire:model.defer="date_start"  data-datepicker-options="{&quot;altInput&quot;: true, &quot;altFormat&quot;: &quot;F j, Y&quot;, &quot;dateFormat&quot;: &quot;Y-m-d&quot;}" value="">
-            <i class="fi-calendar text-muted position-absolute top-50 end-0 translate-middle-y me-3"></i>
-            </div>
+            {{-- <div class="input-group {{ $errors->has('date_start') ? ' is-invalid' : ''}} input-group-lg">
+              <input  readonly="readonly" class="form-control date-picker rounded pe-5 "  type="text" id="pr-birth-date" placeholder="Choisissez une date"  wire:model.defer="date_start"  data-datepicker-options="{&quot;altInput&quot;: true, &quot;altFormat&quot;: &quot;F j, Y&quot;, &quot;dateFormat&quot;: &quot;Y-m-d&quot;}" value="">
+              <i class="fi-calendar text-muted position-absolute top-50 end-0 translate-middle-y me-3"></i>
+            </div> --}}
+            <input type="date" class="form-control  {{ $errors->has('date_start') ? ' is-invalid' : ''}}" wire:model.defer="date_start" >
             @if ($errors->has('date_start'))
-            <span class="invalid-feedback" role="alert">
-                {{ $errors->first('date_start') }}
-            </span>
-        @endif 
+              <span class="invalid-feedback" role="alert">
+                  {{ $errors->first('date_start') }}
+              </span>
+            @endif 
         </div>
 
         <div class="">
