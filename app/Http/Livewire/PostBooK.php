@@ -51,6 +51,7 @@ class PostBooK extends Component
     {
         $this->chambre_id = $this->chambre->id;
         $chambre = $this->chambre;
+       
 
         return view('livewire.post-boo-k', compact("chambre"));
     }
