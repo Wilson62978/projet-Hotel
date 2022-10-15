@@ -9,6 +9,7 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="img/favicon.html" rel="icon">
+    @livewireStyles
 
     <link href="{{asset('assets/css/css2a520.css?family=Heebo:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap')}}" rel="stylesheet">  
 
@@ -26,7 +27,6 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/lightgallery/css/lightgallery-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/flatpickr/dist/flatpickr.min.css') }}">
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
-    @livewireStyles
 </head>
 
 <body>
