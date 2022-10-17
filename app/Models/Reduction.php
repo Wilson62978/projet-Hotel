@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reduction extends Model
 {
     use HasFactory;
+
+    protected $fillable = ["duree", "pourcentage"];
+    
 }
