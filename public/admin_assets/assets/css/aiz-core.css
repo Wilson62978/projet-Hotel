@@ -1,10 +1,3 @@
-/*
-
-Don't modify this file.
-use custom-style.css
-
-*/
-
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -505,6 +498,14 @@ fixed-bottom 1030*/
 
 
 [class*="border"],hr { border-color: #e2e5ec !important; }
+
+.hr {
+    border: 0;
+    border-top: 2px solid #f9f9f9;
+    color: inherit;
+    margin: 0.5rem 0;
+    opacity: 1;
+}
 
 .border-gray-100 { border-color: #f7fafc !important; }
 .border-gray-200 { border-color: #edf2f7 !important; }
@@ -4053,7 +4054,14 @@ input[type="number"] {
     background-color: #fff;
     margin-bottom: 20px;
     border-color: #ebedf2;
+    border-radius: .75rem !important;
 }
+
+.rounded {
+    border-radius: .5rem!important;
+}
+
+
 .card .card-header {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4234,10 +4242,11 @@ input[type="number"] {
 
 .form-control {
     padding: 0.6rem 1rem;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     height: calc(1.3125rem + 1.2rem + 2px);
-    border: 1px solid #e2e5ec;
+    border: 1px solid #dae1e7;
     color: #898b92;
+    border-radius: .3125rem !important;
 }
 .form-control-sm {
     height: calc(1.5rem + 0.8rem + 2px);
@@ -4467,7 +4476,8 @@ input[type="number"] {
 
 .megabox > input:checked ~ .megabox-elem,
 .megabox > input:checked ~ .megabox-elem {
-    border-color: var(--primary);
+    border-color: #ff6e26;
+    box-shadow: inset 0 0 0 2px #ff6e26;
 }
 
 /*input group/ form group*/
@@ -4485,6 +4495,15 @@ input[type="number"] {
     border: 1px solid #e2e5ec;
     border-radius: 4px;
 }
+
+.form-left {
+    border-radius: .3125rem 0 0 .3125rem  !important;
+}
+
+.form-right {
+    border-radius: 0 .3125rem .3125rem 0  !important;
+}
+
 .input-group-sm > .custom-select,
 .input-group-sm > .form-control:not(textarea) {
     height: calc(1.5em + 0.8rem + 2px);
@@ -5853,7 +5872,6 @@ div.footable-loader > span.fooicon:after {
 }
 .modal-content .modal-body {
     padding: 20px 25px;
-    overflow-y: auto;
     max-height: 70vh;
 }
 @media (min-width: 768px) {
@@ -6188,6 +6206,47 @@ div.footable-loader > span.fooicon:after {
 }
 .range-slider .noUi-target{
     border-color: var(--soft-secondary)
+}
+.noUi-target{
+    background-color:#f0f3f2;
+    border:none;border-radius:.5rem
+}
+.noUi-horizontal{
+    height:8px
+}
+.noUi-handle{
+    background:#fff;
+    border:transparent;
+    border-radius:100%;
+    box-shadow:0 2px 8px rgba(0,0,0,.18);
+    cursor:default
+}
+.noUi-handle:focus{
+    outline:none
+}
+.noUi-horizontal .noUi-handle{
+    height:18px;
+    right:-13px;
+    top:-6px;
+    width:18px
+}.noUi-handle:after,.noUi-handle:before{
+    display:none
+}
+.noUi-connects{
+    border-radius:6px
+}
+.noUi-connect{
+    background: var(--primary)
+}
+.noUi-tooltip{
+    background-color:transparent;
+    background-color: var(--primary);
+    border:none;
+    color:#fff;
+    height:30px;
+    line-height:30px;
+    padding:0;
+    width:30px
 }
 
 /*iti mobile number select*/
@@ -6926,9 +6985,32 @@ ul.social.colored [class*="linkedin"] {
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
 }
 
+/* container*/
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    width: 100%;
+}
+
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: calc(var(--bs-gutter-x)*-.5);
+    margin-right: calc(var(--bs-gutter-x)*-.5);
+    margin-top: calc(var(--bs-gutter-y)*-1);
+}
+
+
+
+
 /* collapse side bar*/
-
-
 
 .collapse-sidebar-wrap .overlay{
     opacity: 0;

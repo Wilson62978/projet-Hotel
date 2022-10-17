@@ -13,10 +13,6 @@
                         <span class="side-nav-text">{{('Dashboard')}}</span>
                     </a>
                 </li>
-
-              
-
-               
                 
                 <li class="side-nav-item">
                     <a href="#" class="side-nav-link" aria-expanded="false">
@@ -37,9 +33,16 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="side-nav-item">
+                    <a href="{{ route('uploaded-files.index') }}" class="side-nav-link {{ activeRoutes(['uploaded-files.create'])}}">
+                        <i class="las la-folder-open side-nav-icon"></i>
+                        <span class="side-nav-text">Fichiers téléchargés</span>
+                    </a>
+                </li>
                 
-            </ul><!-- .side-nav -->
-        </div><!-- .side-nav-wrap -->
-    </div><!-- .sidebar -->
+            </ul>
+        </div>
+    </div>
     <div class="sidebar-overlay"></div>
-</div><!-- .sidebar -->
+</div>
