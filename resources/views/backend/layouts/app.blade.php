@@ -18,6 +18,7 @@
 	<!-- aiz core css -->
 	<link rel="stylesheet" href="{{ asset('admin_assets/assets/css/vendorss.css') }}">
 	<link rel="stylesheet" href="{{ asset('admin_assets/assets/css/aiz-core.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin_assets/assets/css/style.css') }}">
 
     <style>
         body {
@@ -73,6 +74,7 @@
 
 	<script src="{{ asset('admin_assets/assets/js/vendors.js') }}" ></script>
 	<script src="{{ asset('admin_assets/assets/js/aiz-core.js') }}" ></script>
+    <script src="{{ asset('admin_assets/assets/js/bootstrap.bundle.js') }}" ></script>
 
     @yield('script')
 

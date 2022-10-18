@@ -1,4 +1,4 @@
-@extends('backend.layouts.appDemo')
+@extends('backend.layouts.app')
 
 @section('content')
 <!-- ========== section start ========== -->

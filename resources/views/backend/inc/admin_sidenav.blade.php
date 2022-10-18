@@ -8,13 +8,18 @@
         <div class="side-nav-wrap">
             <ul class="side-nav-list" id="main-menu" data-toggle="side-menu">
                 <li class="side-nav-item">
-                    <a href="" class="side-nav-link">
+                    <a href="{{route("admin")}}" class="side-nav-link">
                         <i class="las la-home side-nav-icon"></i>
                         <span class="side-nav-text">{{('Dashboard')}}</span>
                     </a>
                 </li>
 
-              
+                <li class="side-nav-item">
+                    <a href="{{ route('demandes.index') }}" class="side-nav-link">
+                        <i class="las la-user-friends side-nav-icon"></i>
+                        <span class="side-nav-text">{{('Demandes de cotations')}}</span>
+                    </a>
+                </li>
 
                
                 
