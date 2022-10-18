@@ -20,14 +20,19 @@ class HomeController extends Controller
 
     public function chambres()
     {
-        $chambres = Chambre::where('published', 1)->get();
+        $chambres = Chambre::select('chambres.*', 'uploads.file_name as thumbnail_img')
+            ->join('uploads', 'uploads.id', '=', 'chambres.thumbnail_img')
+            ->where('chambres.published', 1)->get();
 
         return view('frontend.chambre', compact('chambres'));
     }
 
     public function firstChambre(string $slug)
     {
-        $chambre = Chambre::where('slug', $slug)->firstOrFail();
+        $chambre = Chambre::select('chambres.*', 'uploads.file_name as thumbnail_img')
+            ->join('uploads', 'uploads.id', '=', 'chambres.thumbnail_img')
+            ->where('slug', $slug)
+            ->where('chambres.published', 1)->firstOrFail();
         return view('frontend.chambre_details', compact('chambre'));
     }
 

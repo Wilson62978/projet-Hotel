@@ -12,7 +12,6 @@
 
     <div class="container mt-5 mb-lg-5 mb-4 pb-lg-5">
         <div class="row g-5">
-
             <div class="col-lg-7">
                 <div class="d-flex flex-column">
                     <div class="order-lg-1 order-2">
@@ -27,13 +26,13 @@
                             </div>
                             <div class="tns-carousel-inner" data-carousel-options="{&quot;navAsThumbnails&quot;: true, &quot;navContainer&quot;: &quot;#thumbnails&quot;, &quot;gutter&quot;: 12, &quot;responsive&quot;: {&quot;0&quot;:{&quot;controls&quot;: false},&quot;500&quot;:{&quot;controls&quot;: true}}}">
                                 @foreach($chambre->photos as $photo)
-                                    <div><img class="rounded-3" src="{{ asset($photo->fille_name) }}" alt="Image"></div>
+                                    <div><img class="rounded-3" src="{{ asset(Storage::url($photo->file_name)) }}" alt="Image"></div>
                                 @endforeach
                             </div>
                         </div>
                         <ul class="tns-thumbnails mb-4" id="thumbnails">
                             @foreach($chambre->photos as $photo)
-                                <li class="tns-thumbnail"><img src="{{ asset($photo->fille_name) }}" alt="Thumbnail"></li>
+                                <li class="tns-thumbnail"><img src="{{ asset(Storage::url($photo->file_name)) }}" alt="Thumbnail"></li>
                             @endforeach
                         </ul>
                     </div>
@@ -55,7 +54,7 @@
 
                 <div class="pb-4">
                     <h2 class="h4 mt-2">Description</h2>
-                    <p class="opacity-70 mb-1">{{ $chambre->description }}</p>
+                    <p class="opacity-70 mb-1">{!! $chambre->description !!}</p>
                 </div>
             </div>
 

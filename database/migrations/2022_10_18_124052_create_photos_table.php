@@ -21,7 +21,12 @@ return new class extends Migration
                 ->on('chambres')
                 ->cascadeOnDelete()
                 ->restrictOnUpdate();
-            $table->string('fille_name');
+            $table->unsignedBigInteger('upload_id');
+            $table->foreign('upload_id')
+                ->references('id')
+                ->on('uploads')
+                ->cascadeOnDelete()
+                ->restrictOnUpdate();
             $table->timestamps();
         });
     }

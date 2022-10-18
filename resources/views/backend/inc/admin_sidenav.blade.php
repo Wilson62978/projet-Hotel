@@ -13,6 +13,26 @@
                         <span class="side-nav-text">{{('Dashboard')}}</span>
                     </a>
                 </li>
+
+                <li class="side-nav-item">
+                    <a href="#" class="side-nav-link">
+                        <i class="las la-shopping-cart side-nav-icon"></i>
+                        <span class="side-nav-text">Chambre</span>
+                        <span class="side-nav-arrow"></span>
+                    </a>
+                    <ul class="side-nav-list level-2">
+                        <li class="side-nav-item">
+                            <a class="side-nav-link {{ activeRoutes(['chambre.create'])}}" href="{{route('chambre.create')}}">
+                                <span class="side-nav-text">Ajouter une chambre</span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="{{route('chambre.index')}}" class="side-nav-link {{ activeRoutes(['chambre.index'])}}">
+                                <span class="side-nav-text">Les Chambre</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 
                 <li class="side-nav-item">
                     <a href="#" class="side-nav-link" aria-expanded="false">
@@ -40,7 +60,6 @@
                         <span class="side-nav-text">Fichiers téléchargés</span>
                     </a>
                 </li>
-                
             </ul>
         </div>
     </div>
