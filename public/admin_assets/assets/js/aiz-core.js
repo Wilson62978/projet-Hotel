@@ -6,16 +6,39 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
         else self.attr(attr, attr1);
     });
 };
+
 (function ($) {
     // USE STRICT
     "use strict";
+    AFRI.local = {
+        nothing_selected: 'Nothing selected',
+        nothing_found: 'Aucun résultat trouvé',
+        choose_file: 'Choose file',
+        file_selected: 'File selected',
+        files_selected: 'Files selected',
+        add_more_files: 'Add more files',
+        adding_more_files: 'Adding more files',
+        drop_files_here_paste_or: 'Faites glisser et déposez ou',
+        browse: 'Pacourir',
+        upload_complete: 'Upload complete',
+        upload_paused: 'Upload paused',
+        resume_upload: 'Resume upload',
+        pause_upload: 'Pause upload',
+        retry_upload: 'Retry upload',
+        cancel_upload: 'Cancel upload',
+        uploading: 'Uploading',
+        processing: 'Processing',
+        complete: 'Complete',
+        file: 'File',
+        files: 'Files',
+    };
 
-    AIZ.data = {
+    AFRI.data = {
         csrf: $('meta[name="csrf-token"]').attr("content"),
         appUrl: $('meta[name="app-url"]').attr("content"),
-        fileBaseUrl: $('meta[name="file-base-url"]').attr("content"),
+        fileBaseUrl: $('meta[name="app-url"]').attr("content")+'/storage/',
     };
-    AIZ.uploader = {
+    AFRI.uploader = {
         data: {
             selectedFiles: [],
             selectedFilesObject: [],
@@ -33,9 +56,9 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
             if (selected.length > 0) {
                 $(elem)
                     .find(".file-amount")
-                    .html(AIZ.uploader.updateFileHtml(selected));
+                    .html(AFRI.uploader.updateFileHtml(selected));
             } else {
-                elem.find(".file-amount").html(AIZ.local.choose_file);
+                elem.find(".file-amount").html(AFRI.local.choose_file);
             }
             $(elem).find(".selected-files").val(selected);
         },
@@ -46,18 +69,18 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                     .data("id");
                 var selected = $(this)
                     .closest(".file-preview")
-                    .prev('[data-toggle="aizuploader"]')
+                    .prev('[data-toggle="afriuploader"]')
                     .find(".selected-files")
                     .val()
                     .split(",")
                     .map(Number);
 
-                AIZ.uploader.removeInputValue(
+                AFRI.uploader.removeInputValue(
                     value,
                     selected,
                     $(this)
                         .closest(".file-preview")
-                        .prev('[data-toggle="aizuploader"]')
+                        .prev('[data-toggle="afriuploader"]')
                 );
                 $(this).closest(".file-preview-item").remove();
             });
@@ -67,7 +90,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 $(this).on("click", function (e) {
                     e.preventDefault();
                     var id = $(this).data("id");
-                    AIZ.uploader.data.clickedForDelete = id;
+                    AFRI.uploader.data.clickedForDelete = id;
                     $("#aizUploaderDelete").modal("show");
 
                     $(".uploader-confirmed-delete").on("click", function (
@@ -76,48 +99,48 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                         e.preventDefault();
                         if (e.detail === 1) {
                             var clickedForDeleteObject =
-                                AIZ.uploader.data.allFiles[
-                                    AIZ.uploader.data.allFiles.findIndex(
+                                AFRI.uploader.data.allFiles[
+                                    AFRI.uploader.data.allFiles.findIndex(
                                         (x) =>
                                             x.id ===
-                                            AIZ.uploader.data.clickedForDelete
+                                            AFRI.uploader.data.clickedForDelete
                                     )
                                 ];
                             $.ajax({
                                 url:
-                                    AIZ.data.appUrl +
+                                    AFRI.data.appUrl +
                                     "/uploader/destroy/" +
-                                    AIZ.uploader.data.clickedForDelete,
+                                    AFRI.uploader.data.clickedForDelete,
                                 type: "DELETE",
                                 dataType: "JSON",
                                 data: {
-                                    id: AIZ.uploader.data.clickedForDelete,
+                                    id: AFRI.uploader.data.clickedForDelete,
                                     _method: "DELETE",
-                                    _token: AIZ.data.csrf,
+                                    _token: AFRI.data.csrf,
                                 },
                                 success: function () {
-                                    AIZ.uploader.data.selectedFiles = AIZ.uploader.data.selectedFiles.filter(
+                                    AFRI.uploader.data.selectedFiles = AFRI.uploader.data.selectedFiles.filter(
                                         function (item) {
                                             return (
                                                 item !==
-                                                AIZ.uploader.data
+                                                AFRI.uploader.data
                                                     .clickedForDelete
                                             );
                                         }
                                     );
-                                    AIZ.uploader.data.selectedFilesObject = AIZ.uploader.data.selectedFilesObject.filter(
+                                    AFRI.uploader.data.selectedFilesObject = AFRI.uploader.data.selectedFilesObject.filter(
                                         function (item) {
                                             return (
                                                 item !== clickedForDeleteObject
                                             );
                                         }
                                     );
-                                    AIZ.uploader.updateUploaderSelected();
-                                    AIZ.uploader.getAllUploads(
-                                        AIZ.data.appUrl +
+                                    AFRI.uploader.updateUploaderSelected();
+                                    AFRI.uploader.getAllUploads(
+                                        AFRI.data.appUrl +
                                             "/uploader/get_uploaded_files"
                                     );
-                                    AIZ.uploader.data.clickedForDelete = null;
+                                    AFRI.uploader.data.clickedForDelete = null;
                                     $("#aizUploaderDelete").modal("hide");
                                 },
                             });
@@ -132,8 +155,8 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 elem.on("click", function (e) {
                     var value = $(this).data("value");
                     var valueObject =
-                        AIZ.uploader.data.allFiles[
-                            AIZ.uploader.data.allFiles.findIndex(
+                        AFRI.uploader.data.allFiles[
+                            AFRI.uploader.data.allFiles.findIndex(
                                 (x) => x.id === value
                             )
                         ];
@@ -144,57 +167,57 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                         "true",
                         "false"
                     );
-                    if (!AIZ.uploader.data.multiple) {
+                    if (!AFRI.uploader.data.multiple) {
                         elem.closest(".file-box-wrap")
                             .siblings()
                             .attr("data-selected", "false");
                     }
-                    if (!AIZ.uploader.data.selectedFiles.includes(value)) {
-                        if (!AIZ.uploader.data.multiple) {
-                            AIZ.uploader.data.selectedFiles = [];
-                            AIZ.uploader.data.selectedFilesObject = [];
+                    if (!AFRI.uploader.data.selectedFiles.includes(value)) {
+                        if (!AFRI.uploader.data.multiple) {
+                            AFRI.uploader.data.selectedFiles = [];
+                            AFRI.uploader.data.selectedFilesObject = [];
                         }
-                        AIZ.uploader.data.selectedFiles.push(value);
-                        AIZ.uploader.data.selectedFilesObject.push(valueObject);
+                        AFRI.uploader.data.selectedFiles.push(value);
+                        AFRI.uploader.data.selectedFilesObject.push(valueObject);
                     } else {
-                        AIZ.uploader.data.selectedFiles = AIZ.uploader.data.selectedFiles.filter(
+                        AFRI.uploader.data.selectedFiles = AFRI.uploader.data.selectedFiles.filter(
                             function (item) {
                                 return item !== value;
                             }
                         );
-                        AIZ.uploader.data.selectedFilesObject = AIZ.uploader.data.selectedFilesObject.filter(
+                        AFRI.uploader.data.selectedFilesObject = AFRI.uploader.data.selectedFilesObject.filter(
                             function (item) {
                                 return item !== valueObject;
                             }
                         );
                     }
-                    AIZ.uploader.addSelectedValue();
-                    AIZ.uploader.updateUploaderSelected();
+                    AFRI.uploader.addSelectedValue();
+                    AFRI.uploader.updateUploaderSelected();
                 });
             });
         },
         updateFileHtml: function (array) {
             var fileText = "";
             if (array.length > 1) {
-                var fileText = AIZ.local.files_selected;
+                var fileText = AFRI.local.files_selected;
             } else {
-                var fileText = AIZ.local.file_selected;
+                var fileText = AFRI.local.file_selected;
             }
             return array.length + " " + fileText;
         },
         updateUploaderSelected: function () {
             $(".uploader-selected").html(
-                AIZ.uploader.updateFileHtml(AIZ.uploader.data.selectedFiles)
+                AFRI.uploader.updateFileHtml(AFRI.uploader.data.selectedFiles)
             );
         },
         clearUploaderSelected: function () {
             $(".uploader-selected-clear").on("click", function () {
-                AIZ.uploader.data.selectedFiles = [];
-                AIZ.uploader.addSelectedValue();
-                AIZ.uploader.addHiddenValue();
-                AIZ.uploader.resetFilter();
-                AIZ.uploader.updateUploaderSelected();
-                AIZ.uploader.updateUploaderFiles();
+                AFRI.uploader.data.selectedFiles = [];
+                AFRI.uploader.addSelectedValue();
+                AFRI.uploader.addHiddenValue();
+                AFRI.uploader.resetFilter();
+                AFRI.uploader.updateUploaderSelected();
+                AFRI.uploader.updateUploaderFiles();
             });
         },
         resetFilter: function () {
@@ -220,24 +243,23 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 params["sort"] = 'newest';
             }
             $.get(url, params, function (data, status) {
-                //console.log(data);
                 if(typeof data == 'string'){
                     data = JSON.parse(data);
                 }
-                AIZ.uploader.data.allFiles = data.data;
-                AIZ.uploader.allowedFileType();
-                AIZ.uploader.addSelectedValue();
-                AIZ.uploader.addHiddenValue();
-                //AIZ.uploader.resetFilter();
-                AIZ.uploader.updateUploaderFiles();
+                AFRI.uploader.data.allFiles = data.data;
+                AFRI.uploader.allowedFileType();
+                AFRI.uploader.addSelectedValue();
+                AFRI.uploader.addHiddenValue();
+                //AFRI.uploader.resetFilter();
+                AFRI.uploader.updateUploaderFiles();
                 if (data.next_page_url != null) {
-                    AIZ.uploader.data.next_page_url = data.next_page_url;
+                    AFRI.uploader.data.next_page_url = data.next_page_url;
                     $("#uploader_next_btn").removeAttr("disabled");
                 } else {
                     $("#uploader_next_btn").attr("disabled", true);
                 }
                 if (data.prev_page_url != null) {
-                    AIZ.uploader.data.prev_page_url = data.prev_page_url;
+                    AFRI.uploader.data.prev_page_url = data.prev_page_url;
                     $("#uploader_prev_btn").removeAttr("disabled");
                 } else {
                     $("#uploader_prev_btn").attr("disabled", true);
@@ -246,86 +268,86 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
         },
         showSelectedFiles: function () {
             $('[name="show-selected"]').on("change", function () {
+
                 if ($(this).is(":checked")) {
                     // for (
                     //     var i = 0;
-                    //     i < AIZ.uploader.data.allFiles.length;
+                    //     i < AFRI.uploader.data.allFiles.length;
                     //     i++
                     // ) {
-                    //     if (AIZ.uploader.data.allFiles[i].selected) {
-                    //         AIZ.uploader.data.allFiles[
+                    //     if (AFRI.uploader.data.allFiles[i].selected) {
+                    //         AFRI.uploader.data.allFiles[
                     //             i
                     //         ].aria_hidden = false;
                     //     } else {
-                    //         AIZ.uploader.data.allFiles[
+                    //         AFRI.uploader.data.allFiles[
                     //             i
                     //         ].aria_hidden = true;
                     //     }
                     // }
-                    AIZ.uploader.data.allFiles =
-                        AIZ.uploader.data.selectedFilesObject;
+                    AFRI.uploader.data.allFiles = AFRI.uploader.data.selectedFilesObject;
                 } else {
                     // for (
                     //     var i = 0;
-                    //     i < AIZ.uploader.data.allFiles.length;
+                    //     i < AFRI.uploader.data.allFiles.length;
                     //     i++
                     // ) {
-                    //     AIZ.uploader.data.allFiles[
+                    //     AFRI.uploader.data.allFiles[
                     //         i
                     //     ].aria_hidden = false;
                     // }
-                    AIZ.uploader.getAllUploads(
-                        AIZ.data.appUrl + "/uploader/get_uploaded_files"
+                    AFRI.uploader.getAllUploads(
+                        AFRI.data.appUrl + "/uploader/get_uploaded_files"
                     );
                 }
-                AIZ.uploader.updateUploaderFiles();
+                AFRI.uploader.updateUploaderFiles();
             });
         },
         searchUploaderFiles: function () {
             $('[name="uploader-search"]').on("keyup", function () {
                 var value = $(this).val();
-                AIZ.uploader.getAllUploads(
-                    AIZ.data.appUrl + "/uploader/get_uploaded_files",
+                AFRI.uploader.getAllUploads(
+                    AFRI.data.appUrl + "/uploader/get_uploaded_files",
                     value,
                     $('[name="uploader-sort"]').val()
                 );
-                // if (AIZ.uploader.data.allFiles.length > 0) {
+                // if (AFRI.uploader.data.allFiles.length > 0) {
                 //     for (
                 //         var i = 0;
-                //         i < AIZ.uploader.data.allFiles.length;
+                //         i < AFRI.uploader.data.allFiles.length;
                 //         i++
                 //     ) {
                 //         if (
-                //             AIZ.uploader.data.allFiles[
+                //             AFRI.uploader.data.allFiles[
                 //                 i
                 //             ].file_original_name
                 //                 .toUpperCase()
                 //                 .indexOf(value) > -1
                 //         ) {
-                //             AIZ.uploader.data.allFiles[
+                //             AFRI.uploader.data.allFiles[
                 //                 i
                 //             ].aria_hidden = false;
                 //         } else {
-                //             AIZ.uploader.data.allFiles[
+                //             AFRI.uploader.data.allFiles[
                 //                 i
                 //             ].aria_hidden = true;
                 //         }
                 //     }
                 // }
-                //AIZ.uploader.updateUploaderFiles();
+                //AFRI.uploader.updateUploaderFiles();
             });
         },
         sortUploaderFiles: function () {
             $('[name="uploader-sort"]').on("change", function () {
                 var value = $(this).val();
-                AIZ.uploader.getAllUploads(
-                    AIZ.data.appUrl + "/uploader/get_uploaded_files",
+                AFRI.uploader.getAllUploads(
+                    AFRI.data.appUrl + "/uploader/get_uploaded_files",
                     $('[name="uploader-search"]').val(),
                     value
                 );
 
                 // if (value === "oldest") {
-                //     AIZ.uploader.data.allFiles = AIZ.uploader.data.allFiles.sort(
+                //     AFRI.uploader.data.allFiles = AFRI.uploader.data.allFiles.sort(
                 //         function(a, b) {
                 //             return (
                 //                 new Date(a.created_at) - new Date(b.created_at)
@@ -333,19 +355,19 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 //         }
                 //     );
                 // } else if (value === "smallest") {
-                //     AIZ.uploader.data.allFiles = AIZ.uploader.data.allFiles.sort(
+                //     AFRI.uploader.data.allFiles = AFRI.uploader.data.allFiles.sort(
                 //         function(a, b) {
                 //             return a.file_size - b.file_size;
                 //         }
                 //     );
                 // } else if (value === "largest") {
-                //     AIZ.uploader.data.allFiles = AIZ.uploader.data.allFiles.sort(
+                //     AFRI.uploader.data.allFiles = AFRI.uploader.data.allFiles.sort(
                 //         function(a, b) {
                 //             return b.file_size - a.file_size;
                 //         }
                 //     );
                 // } else {
-                //     AIZ.uploader.data.allFiles = AIZ.uploader.data.allFiles.sort(
+                //     AFRI.uploader.data.allFiles = AFRI.uploader.data.allFiles.sort(
                 //         function(a, b) {
                 //             a = new Date(a.created_at);
                 //             b = new Date(b.created_at);
@@ -353,42 +375,44 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 //         }
                 //     );
                 // }
-                //AIZ.uploader.updateUploaderFiles();
+                //AFRI.uploader.updateUploaderFiles();
             });
         },
         addSelectedValue: function () {
-            for (var i = 0; i < AIZ.uploader.data.allFiles.length; i++) {
+            for (var i = 0; i < AFRI.uploader.data.allFiles.length; i++) {
                 if (
-                    !AIZ.uploader.data.selectedFiles.includes(
-                        AIZ.uploader.data.allFiles[i].id
+                    !AFRI.uploader.data.selectedFiles.includes(
+                        AFRI.uploader.data.allFiles[i].id
                     )
                 ) {
-                    AIZ.uploader.data.allFiles[i].selected = false;
+                    AFRI.uploader.data.allFiles[i].selected = false;
                 } else {
-                    AIZ.uploader.data.allFiles[i].selected = true;
+                    AFRI.uploader.data.allFiles[i].selected = true;
                 }
             }
         },
         addHiddenValue: function () {
-            for (var i = 0; i < AIZ.uploader.data.allFiles.length; i++) {
-                AIZ.uploader.data.allFiles[i].aria_hidden = false;
+            for (var i = 0; i < AFRI.uploader.data.allFiles.length; i++) {
+                AFRI.uploader.data.allFiles[i].aria_hidden = false;
             }
         },
         allowedFileType: function () {
-            if (AIZ.uploader.data.type !== "all") {
-                AIZ.uploader.data.allFiles = AIZ.uploader.data.allFiles.filter(
+            
+            if (AFRI.uploader.data.type !== "all") {
+                AFRI.uploader.data.allFiles = AFRI.uploader.data.allFiles.filter(
                     function (item) {
-                        return item.type === AIZ.uploader.data.type;
+                        return item.file_type === AFRI.uploader.data.type;
                     }
                 );
             }
+
         },
         updateUploaderFiles: function () {
             $(".uploader-all").html(
                 '<div class="align-items-center d-flex h-100 justify-content-center w-100"><div class="spinner-border" role="status"></div></div>'
             );
 
-            var data = AIZ.uploader.data.allFiles;
+            var data = AFRI.uploader.data.allFiles;
 
             setTimeout(function () {
                 $(".uploader-all").html(null);
@@ -397,10 +421,10 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                     for (var i = 0; i < data.length; i++) {
                         var thumb = "";
                         var hidden = "";
-                        if (data[i].type === "image") {
+                        if (data[i].file_type === "image") {
                             thumb =
                                 '<img src="' +
-                                AIZ.data.fileBaseUrl +
+                                AFRI.data.fileBaseUrl +
                                 data[i].file_name +
                                 '" class="img-fit">';
                         } else {
@@ -419,7 +443,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             // "</a>" +
                             // '<div class="dropdown-menu dropdown-menu-right">' +
                             // '<a href="' +
-                            // AIZ.data.fileBaseUrl +
+                            // AFRI.data.fileBaseUrl +
                             // data[i].file_name +
                             // '" target="_blank" download="' +
                             // data[i].file_original_name +
@@ -434,7 +458,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             '<div class="card card-file uploader-select" title="' +
                             data[i].file_original_name +
                             "." +
-                            data[i].extension +
+                            data[i].file_extension +
                             '" data-value="' +
                             data[i].id +
                             '">' +
@@ -447,11 +471,11 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             data[i].file_original_name +
                             "</span>" +
                             '<span class="ext flex-shrink-0">.' +
-                            data[i].extension +
+                            data[i].file_extension +
                             "</span>" +
                             "</h6>" +
                             "<p>" +
-                            AIZ.extra.bytesToSize(data[i].file_size) +
+                            AFRI.extra.bytesToSize(data[i].file_size) +
                             "</p>" +
                             "</div>" +
                             "</div>" +
@@ -465,26 +489,26 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                         '<div class="align-items-center d-flex h-100 justify-content-center w-100 nav-tabs"><div class="text-center"><h3>No files found</h3></div></div>'
                     );
                 }
-                AIZ.uploader.uploadSelect();
-                AIZ.uploader.deleteUploaderFile();
+                AFRI.uploader.uploadSelect();
+                AFRI.uploader.deleteUploaderFile();
             }, 300);
         },
         inputSelectPreviewGenerate: function (elem) {
-            elem.find(".selected-files").val(AIZ.uploader.data.selectedFiles);
+            elem.find(".selected-files").val(AFRI.uploader.data.selectedFiles);
             elem.next(".file-preview").html(null);
 
-            if (AIZ.uploader.data.selectedFiles.length > 0) {
+            if (AFRI.uploader.data.selectedFiles.length > 0) {
 
                 $.post(
-                    AIZ.data.appUrl + "/uploader/get_file_by_ids",
-                    { _token: AIZ.data.csrf, ids: AIZ.uploader.data.selectedFiles.toString() },
+                    AFRI.data.appUrl + "/uploader/get_file_by_ids",
+                    { _token: AFRI.data.csrf, ids: AFRI.uploader.data.selectedFiles.toString() },
                     function (data) {
 
                         elem.next(".file-preview").html(null);
 
                         if (data.length > 0) {
                             elem.find(".file-amount").html(
-                                AIZ.uploader.updateFileHtml(data)
+                                AFRI.uploader.updateFileHtml(data)
                             );
                             for (
                                 var i = 0;
@@ -492,10 +516,10 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                                 i++
                             ) {
                                 var thumb = "";
-                                if (data[i].type === "image") {
+                                if (data[i].file_type === "image") {
                                     thumb =
                                         '<img src="' +
-                                        AIZ.data.fileBaseUrl +
+                                        AFRI.data.fileBaseUrl +
                                         data[i].file_name +
                                         '" class="img-fit">';
                                 } else {
@@ -507,7 +531,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                                     '" title="' +
                                     data[i].file_original_name +
                                     "." +
-                                    data[i].extension +
+                                    data[i].file_extension +
                                     '">' +
                                     '<div class="align-items-center align-self-stretch d-flex justify-content-center thumb">' +
                                     thumb +
@@ -518,11 +542,11 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                                     data[i].file_original_name +
                                     "</span>" +
                                     '<span class="flex-shrink-0 ext">.' +
-                                    data[i].extension +
+                                    data[i].file_extension +
                                     "</span>" +
                                     "</h6>" +
                                     "<p>" +
-                                    AIZ.extra.bytesToSize(
+                                    AFRI.extra.bytesToSize(
                                         data[i].file_size
                                     ) +
                                     "</p>" +
@@ -537,43 +561,43 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                                 elem.next(".file-preview").append(html);
                             }
                         } else {
-                            elem.find(".file-amount").html(AIZ.local.choose_file);
+                            elem.find(".file-amount").html(AFRI.local.choose_file);
                         }
                 });
             } else {
-                elem.find(".file-amount").html(AIZ.local.choose_file);
+                elem.find(".file-amount").html(AFRI.local.choose_file);
             }
 
-            // if (AIZ.uploader.data.selectedFiles.length > 0) {
+            // if (AFRI.uploader.data.selectedFiles.length > 0) {
             //     elem.find(".file-amount").html(
-            //         AIZ.uploader.updateFileHtml(AIZ.uploader.data.selectedFiles)
+            //         AFRI.uploader.updateFileHtml(AFRI.uploader.data.selectedFiles)
             //     );
             //     for (
             //         var i = 0;
-            //         i < AIZ.uploader.data.selectedFiles.length;
+            //         i < AFRI.uploader.data.selectedFiles.length;
             //         i++
             //     ) {
-            //         var index = AIZ.uploader.data.allFiles.findIndex(
-            //             (x) => x.id === AIZ.uploader.data.selectedFiles[i]
+            //         var index = AFRI.uploader.data.allFiles.findIndex(
+            //             (x) => x.id === AFRI.uploader.data.selectedFiles[i]
             //         );
             //         var thumb = "";
-            //         if (AIZ.uploader.data.allFiles[index].type == "image") {
+            //         if (AFRI.uploader.data.allFiles[index].type == "image") {
             //             thumb =
             //                 '<img src="' +
-            //                 AIZ.data.appUrl +
+            //                 AFRI.data.appUrl +
             //                 "/public/" +
-            //                 AIZ.uploader.data.allFiles[index].file_name +
+            //                 AFRI.uploader.data.allFiles[index].file_name +
             //                 '" class="img-fit">';
             //         } else {
             //             thumb = '<i class="la la-file-text"></i>';
             //         }
             //         var html =
             //             '<div class="d-flex justify-content-between align-items-center mt-2 file-preview-item" data-id="' +
-            //             AIZ.uploader.data.allFiles[index].id +
+            //             AFRI.uploader.data.allFiles[index].id +
             //             '" title="' +
-            //             AIZ.uploader.data.allFiles[index].file_original_name +
+            //             AFRI.uploader.data.allFiles[index].file_original_name +
             //             "." +
-            //             AIZ.uploader.data.allFiles[index].extension +
+            //             AFRI.uploader.data.allFiles[index].extension +
             //             '">' +
             //             '<div class="align-items-center align-self-stretch d-flex justify-content-center thumb">' +
             //             thumb +
@@ -581,15 +605,15 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
             //             '<div class="col body">' +
             //             '<h6 class="d-flex">' +
             //             '<span class="text-truncate title">' +
-            //             AIZ.uploader.data.allFiles[index].file_original_name +
+            //             AFRI.uploader.data.allFiles[index].file_original_name +
             //             "</span>" +
             //             '<span class="ext">.' +
-            //             AIZ.uploader.data.allFiles[index].extension +
+            //             AFRI.uploader.data.allFiles[index].extension +
             //             "</span>" +
             //             "</h6>" +
             //             "<p>" +
-            //             AIZ.extra.bytesToSize(
-            //                 AIZ.uploader.data.allFiles[index].file_size
+            //             AFRI.extra.bytesToSize(
+            //                 AFRI.uploader.data.allFiles[index].file_size
             //             ) +
             //             "</p>" +
             //             "</div>" +
@@ -607,21 +631,21 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
             // }
         },
         editorImageGenerate: function (elem) {
-            if (AIZ.uploader.data.selectedFiles.length > 0) {
+            if (AFRI.uploader.data.selectedFiles.length > 0) {
                 for (
                     var i = 0;
-                    i < AIZ.uploader.data.selectedFiles.length;
+                    i < AFRI.uploader.data.selectedFiles.length;
                     i++
                 ) {
-                    var index = AIZ.uploader.data.allFiles.findIndex(
-                        (x) => x.id === AIZ.uploader.data.selectedFiles[i]
+                    var index = AFRI.uploader.data.allFiles.findIndex(
+                        (x) => x.id === AFRI.uploader.data.selectedFiles[i]
                     );
                     var thumb = "";
-                    if (AIZ.uploader.data.allFiles[index].type === "image") {
+                    if (AFRI.uploader.data.allFiles[index].file_type === "image") {
                         thumb =
                             '<img src="' +
-                            AIZ.data.fileBaseUrl +
-                            AIZ.uploader.data.allFiles[index].file_name +
+                            AFRI.data.fileBaseUrl +
+                            AFRI.uploader.data.allFiles[index].file_name +
                             '">';
                         elem[0].insertHTML(thumb);
                         // console.log(elem);
@@ -630,9 +654,9 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
             }
         },
         dismissUploader: function () {
-            $("#aizUploaderModal").on("hidden.bs.modal", function () {
+            $("#UploaderModal").on("hidden.bs.modal", function () {
                 $(".uploader-backdrop").remove();
-                $("#aizUploaderModal").remove();
+                $("#UploaderModal").remove();
             });
         },
         trigger: function (
@@ -650,62 +674,62 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
             var type = type;
             var oldSelectedFiles = selectd;
             if (oldSelectedFiles !== "") {
-                AIZ.uploader.data.selectedFiles = oldSelectedFiles
+                AFRI.uploader.data.selectedFiles = oldSelectedFiles
                     .split(",")
                     .map(Number);
             } else {
-                AIZ.uploader.data.selectedFiles = [];
+                AFRI.uploader.data.selectedFiles = [];
             }
             if ("undefined" !== typeof type && type.length > 0) {
-                AIZ.uploader.data.type = type;
+                AFRI.uploader.data.type = type;
             }
 
             if (multiple) {
-                AIZ.uploader.data.multiple = true;
+                AFRI.uploader.data.multiple = true;
             }else{
-                AIZ.uploader.data.multiple = false;
+                AFRI.uploader.data.multiple = false;
             }
 
             // setTimeout(function() {
             $.post(
-                AIZ.data.appUrl + "/uploader",
-                { _token: AIZ.data.csrf },
+                AFRI.data.appUrl + "/uploader",
+                { _token: AFRI.data.csrf },
                 function (data) {
                     $("body").append(data);
-                    $("#aizUploaderModal").modal("show");
-                    AIZ.plugins.aizUppy();
-                    AIZ.uploader.getAllUploads(
-                        AIZ.data.appUrl + "/uploader/get_uploaded_files",
+                    $("#UploaderModal").modal("show");
+                    AFRI.plugins.afriUppy();
+                    AFRI.uploader.getAllUploads(
+                        AFRI.data.appUrl + "/uploader/get_uploaded_files",
                         null,
                         $('[name="uploader-sort"]').val()
                     );
-                    AIZ.uploader.updateUploaderSelected();
-                    AIZ.uploader.clearUploaderSelected();
-                    AIZ.uploader.sortUploaderFiles();
-                    AIZ.uploader.searchUploaderFiles();
-                    AIZ.uploader.showSelectedFiles();
-                    AIZ.uploader.dismissUploader();
+                    AFRI.uploader.updateUploaderSelected();
+                    AFRI.uploader.clearUploaderSelected();
+                    AFRI.uploader.sortUploaderFiles();
+                    AFRI.uploader.searchUploaderFiles();
+                    AFRI.uploader.showSelectedFiles();
+                    AFRI.uploader.dismissUploader();
 
                     $("#uploader_next_btn").on("click", function () {
-                        if (AIZ.uploader.data.next_page_url != null) {
+                        if (AFRI.uploader.data.next_page_url != null) {
                             $('[name="show-selected"]').prop(
                                 "checked",
                                 false
                             );
-                            AIZ.uploader.getAllUploads(
-                                AIZ.uploader.data.next_page_url
+                            AFRI.uploader.getAllUploads(
+                                AFRI.uploader.data.next_page_url
                             );
                         }
                     });
 
                     $("#uploader_prev_btn").on("click", function () {
-                        if (AIZ.uploader.data.prev_page_url != null) {
+                        if (AFRI.uploader.data.prev_page_url != null) {
                             $('[name="show-selected"]').prop(
                                 "checked",
                                 false
                             );
-                            AIZ.uploader.getAllUploads(
-                                AIZ.uploader.data.prev_page_url
+                            AFRI.uploader.getAllUploads(
+                                AFRI.uploader.data.prev_page_url
                             );
                         }
                     });
@@ -714,15 +738,15 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                         $(this).parent().toggleClass("open");
                     });
 
-                    $('[data-toggle="aizUploaderAddSelected"]').on(
+                    $('[data-toggle="UploaderAddSelected"]').on(
                         "click",
                         function () {
                             if (from === "input") {
-                                AIZ.uploader.inputSelectPreviewGenerate(elem);
+                                AFRI.uploader.inputSelectPreviewGenerate(elem);
                             } else if (from === "direct") {
-                                callback(AIZ.uploader.data.selectedFiles);
+                                callback(AFRI.uploader.data.selectedFiles);
                             }
-                            $("#aizUploaderModal").modal("hide");
+                            $("#UploaderModal").modal("hide");
                         }
                     );
                 }
@@ -730,7 +754,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
             // }, 50);
         },
         initForInput: function () {
-            $(document).on("click",'[data-toggle="aizuploader"]', function (e) {
+            $(document).on("click",'[data-toggle="afriuploader"]', function (e) {
                 if (e.detail === 1) {
                     var elem = $(this);
                     var multiple = elem.data("multiple");
@@ -743,7 +767,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                         ? ""
                         : oldSelectedFiles;
 
-                    AIZ.uploader.trigger(
+                    AFRI.uploader.trigger(
                         this,
                         "input",
                         type,
@@ -754,20 +778,20 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
             });
         },
         previewGenerate: function(){
-            $('[data-toggle="aizuploader"]').each(function () {
+            $('[data-toggle="afriuploader"]').each(function () {
                 var $this = $(this);
                 var files = $this.find(".selected-files").val();
                 if(files != ""){
                     $.post(
-                        AIZ.data.appUrl + "/uploader/get_file_by_ids",
-                        { _token: AIZ.data.csrf, ids: files },
+                        AFRI.data.appUrl + "/uploader/get_file_by_ids",
+                        { _token: AFRI.data.csrf, ids: files },
                         function (data) {
 
                             $this.next(".file-preview").html(null);
 
                             if (data.length > 0) {
                                 $this.find(".file-amount").html(
-                                    AIZ.uploader.updateFileHtml(data)
+                                    AFRI.uploader.updateFileHtml(data)
                                 );
                                 for (
                                     var i = 0;
@@ -775,10 +799,10 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                                     i++
                                 ) {
                                     var thumb = "";
-                                    if (data[i].type === "image") {
+                                    if (data[i].file_type === "image") {
                                         thumb =
                                             '<img src="' +
-                                            AIZ.data.fileBaseUrl +
+                                            AFRI.data.fileBaseUrl +
                                             data[i].file_name +
                                             '" class="img-fit">';
                                     } else {
@@ -790,7 +814,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                                         '" title="' +
                                         data[i].file_original_name +
                                         "." +
-                                        data[i].extension +
+                                        data[i].file_extension +
                                         '">' +
                                         '<div class="align-items-center align-self-stretch d-flex justify-content-center thumb">' +
                                         thumb +
@@ -801,11 +825,11 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                                         data[i].file_original_name +
                                         "</span>" +
                                         '<span class="ext flex-shrink-0">.' +
-                                        data[i].extension +
+                                        data[i].file_extension +
                                         "</span>" +
                                         "</h6>" +
                                         "<p>" +
-                                        AIZ.extra.bytesToSize(
+                                        AFRI.extra.bytesToSize(
                                             data[i].file_size
                                         ) +
                                         "</p>" +
@@ -820,14 +844,15 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                                     $this.next(".file-preview").append(html);
                                 }
                             } else {
-                                $this.find(".file-amount").html(AIZ.local.choose_file);
+                                $this.find(".file-amount").html(AFRI.local.choose_file);
                             }
                     });
                 }
             });
         }
     };
-    AIZ.plugins = {
+    
+    AFRI.plugins = {
         metismenu: function () {
             $('[data-toggle="side-menu"]').metisMenu();
         },
@@ -841,7 +866,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                     }
                     $this.selectpicker({
                         size: 5,
-                        noneSelectedText: AIZ.local.nothing_selected,                     
+                        noneSelectedText: AFRI.local.nothing_selected,                     
                         virtualScroll: false
                     });
                 }
@@ -896,7 +921,13 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
 
                 buttons = !buttons
                     ? [
-                        ["para", ["ul"]]
+                          ["font", ["bold", "underline", "italic", "clear"]],
+                          ["para", ["ul", "ol", "paragraph"]],
+                          ["style", ["style"]],
+                          ["color", ["color"]],
+                          ["table", ["table"]],
+                          ["insert", ["link", "picture", "video"]],
+                          ["view", ["fullscreen", "undo", "redo"]],
                       ]
                     : buttons;
                 placeholder = !placeholder ? "" : placeholder;
@@ -1040,7 +1071,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 var $this = $(this);
 
                 var empty = $this.data("empty");
-                empty = !empty ? AIZ.local.nothing_found : empty;
+                empty = !empty ? AFRI.local.nothing_found : empty;
 
                 $this.footable({
                     breakpoints: {
@@ -1053,8 +1084,8 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                     cascade: true,
                     on: {
                         "ready.ft.table": function (e, ft) {
-                            AIZ.extra.deleteConfirm();
-                            AIZ.plugins.bootstrapSelect("refresh");
+                            AFRI.extra.deleteConfirm();
+                            AFRI.plugins.bootstrapSelect("refresh");
                         },
                     },
                     empty: empty,
@@ -1092,10 +1123,13 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 }
             );
         },
-        aizUppy: function () {
+        afriUppy: function () {
             if ($("#upload-files").length > 0) {
                 var uppy = Uppy.Core({
                     autoProceed: true,
+                    restrictions: {
+                        allowedFileTypes: ['.pdf', '.jpg', '.jpeg', '.png'],
+                    },
                 });
                 uppy.use(Uppy.Dashboard, {
                     target: "#upload-files",
@@ -1108,44 +1142,44 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                     proudlyDisplayPoweredByUppy: false,
                     locale: {
                         strings: {
-                            addMoreFiles: AIZ.local.add_more_files,
-                            addingMoreFiles: AIZ.local.adding_more_files,
-                            dropPaste: AIZ.local.drop_files_here_paste_or+' %{browse}',
-                            browse: AIZ.local.browse,
-                            uploadComplete: AIZ.local.upload_complete,
-                            uploadPaused: AIZ.local.upload_paused,
-                            resumeUpload: AIZ.local.resume_upload,
-                            pauseUpload: AIZ.local.pause_upload,
-                            retryUpload: AIZ.local.retry_upload,
-                            cancelUpload: AIZ.local.cancel_upload,
+                            addMoreFiles: AFRI.local.add_more_files,
+                            addingMoreFiles: AFRI.local.adding_more_files,
+                            dropPaste: AFRI.local.drop_files_here_paste_or+' %{browse}',
+                            browse: AFRI.local.browse,
+                            uploadComplete: AFRI.local.upload_complete,
+                            uploadPaused: AFRI.local.upload_paused,
+                            resumeUpload: AFRI.local.resume_upload,
+                            pauseUpload: AFRI.local.pause_upload,
+                            retryUpload: AFRI.local.retry_upload,
+                            cancelUpload: AFRI.local.cancel_upload,
                             xFilesSelected: {
-                                0: '%{smart_count} '+AIZ.local.file_selected,
-                                1: '%{smart_count} '+AIZ.local.files_selected
+                                0: '%{smart_count} '+AFRI.local.file_selected,
+                                1: '%{smart_count} '+AFRI.local.files_selected
                             },
                             uploadingXFiles: {
-                                0: AIZ.local.uploading+' %{smart_count} '+AIZ.local.file,
-                                1: AIZ.local.uploading+' %{smart_count} '+AIZ.local.files
+                                0: AFRI.local.uploading+' %{smart_count} '+AFRI.local.file,
+                                1: AFRI.local.uploading+' %{smart_count} '+AFRI.local.files
                             },
                             processingXFiles: {
-                                0: AIZ.local.processing+' %{smart_count} '+AIZ.local.file,
-                                1: AIZ.local.processing+' %{smart_count} '+AIZ.local.files
+                                0: AFRI.local.processing+' %{smart_count} '+AFRI.local.file,
+                                1: AFRI.local.processing+' %{smart_count} '+AFRI.local.files
                             },
-                            uploading: AIZ.local.uploading,
-                            complete: AIZ.local.complete,
+                            uploading: AFRI.local.uploading,
+                            complete: AFRI.local.complete,
                         }
                     }
                 });
                 uppy.use(Uppy.XHRUpload, {
-                    endpoint: AIZ.data.appUrl + "/uploader/upload",
-                    fieldName: "aiz_file",
+                    endpoint: AFRI.data.appUrl + "/uploader/upload",
+                    fieldName: "file",
                     formData: true,
                     headers: {
-                        'X-CSRF-TOKEN': AIZ.data.csrf,
+                        'X-CSRF-TOKEN': AFRI.data.csrf,
                     },
                 });
-                uppy.on("upload-success", function () {
-                    AIZ.uploader.getAllUploads(
-                        AIZ.data.appUrl + "/uploader/get_uploaded_files"
+                uppy.on("upload-success", function (data) {
+                    AFRI.uploader.getAllUploads(
+                        AFRI.data.appUrl + "/uploader/get_uploaded_files"
                     );
                 });
             }
@@ -1336,6 +1370,9 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             min: parseInt(c.getAttribute("data-range-value-min")),
                             max: parseInt(c.getAttribute("data-range-value-max")),
                         },
+                        format: wNumb({
+                            decimals: 0,
+                        })
                     }),
                     
                     c.noUiSlider.on("update", function (a, b) {
@@ -1388,12 +1425,12 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
             }
         }
     };
-    AIZ.extra = {
+    AFRI.extra = {
         refreshToken: function (){
-            $.get(AIZ.data.appUrl+'/refresh-csrf').done(function(data){
-                AIZ.data.csrf = data;
+            $.get(AFRI.data.appUrl+'/refresh-csrf').done(function(data){
+                AFRI.data.csrf = data;
             });
-            // console.log(AIZ.data.csrf);
+            // console.log(AFRI.data.csrf);
         },
         mobileNavToggle: function () {
             if(window.matchMedia('(max-width: 1200px)').matches){
@@ -1432,9 +1469,9 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
         deleteConfirm: function () {
             $(".confirm-delete").click(function (e) {
                 e.preventDefault();
-                var url = $(this).data("href");
+                var url = $(this).data("action");
                 $("#delete-modal").modal("show");
-                $("#delete-link").attr("href", url);
+                $("#delete-link").attr("action", url);
             });
 
             $(".confirm-cancel").click(function (e) {
@@ -1494,9 +1531,9 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 } else if (files.length > 1) {
                     $(this)
                         .next(".custom-file-name")
-                        .html(files.length + " " + AIZ.local.files_selected);
+                        .html(files.length + " " + AFRI.local.files_selected);
                 } else {
-                    $(this).next(".custom-file-name").html(AIZ.local.choose_file);
+                    $(this).next(".custom-file-name").html(AFRI.local.choose_file);
                 }
             });
         },
@@ -1653,7 +1690,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 $this.on("click", function (e) {
                     e.preventDefault();
                     $(target).append(content);
-                    AIZ.plugins.bootstrapSelect();
+                    AFRI.plugins.bootstrapSelect();
                 });
             });
         },
@@ -1755,9 +1792,9 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                 });
         },
         trimAppUrl: function(){
-            if(AIZ.data.appUrl.slice(-1) == '/'){
-                AIZ.data.appUrl = AIZ.data.appUrl.slice(0, AIZ.data.appUrl.length -1);
-                // console.log(AIZ.data.appUrl);
+            if(AFRI.data.appUrl.slice(-1) == '/'){
+                AFRI.data.appUrl = AFRI.data.appUrl.slice(0, AFRI.data.appUrl.length -1);
+                // console.log(AFRI.data.appUrl);
             }
         },
         setCookie: function(cname, cvalue, exdays) {
@@ -1782,11 +1819,11 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
             return "";
         },
         acceptCookie: function(){
-            if (!AIZ.extra.getCookie("acceptCookies")) {
+            if (!AFRI.extra.getCookie("acceptCookies")) {
                 $(".cookie-alert").addClass("show");
             }
             $(".cookie-accept").on("click", function() {
-                AIZ.extra.setCookie("acceptCookies", true, 60);
+                AFRI.extra.setCookie("acceptCookies", true, 60);
                 $(".cookie-alert").removeClass("show");
             });
         },
@@ -1825,54 +1862,55 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
         }
     };
 
+
     setInterval(function(){
-        AIZ.extra.refreshToken();
+        AFRI.extra.refreshToken();
     }, 3600000);
 
     // init aiz plugins, extra options
-    AIZ.extra.initActiveMenu();
-    AIZ.extra.mobileNavToggle();
-    AIZ.extra.deleteConfirm();
-    AIZ.extra.multiModal();
-    AIZ.extra.inputRating();
-    AIZ.extra.bsCustomFile();
-    AIZ.extra.stopPropagation();
-    AIZ.extra.outsideClickHide();
-    AIZ.extra.scrollToBottom();
-    AIZ.extra.classToggle();
-    AIZ.extra.collapseSidebar();
-    AIZ.extra.autoScroll();
-    AIZ.extra.addMore();
-    AIZ.extra.removeParent();
-    AIZ.extra.selectHideShow();
-    AIZ.extra.plusMinus();
-    AIZ.extra.hovCategoryMenu();
-    AIZ.extra.trimAppUrl();
-    AIZ.extra.acceptCookie();
-    AIZ.extra.setSession();
-    AIZ.extra.showSessionPopup()
+    AFRI.extra.initActiveMenu();
+    AFRI.extra.mobileNavToggle();
+    AFRI.extra.deleteConfirm();
+    AFRI.extra.multiModal();
+    AFRI.extra.inputRating();
+    AFRI.extra.bsCustomFile();
+    AFRI.extra.stopPropagation();
+    AFRI.extra.outsideClickHide();
+    AFRI.extra.scrollToBottom();
+    AFRI.extra.classToggle();
+    AFRI.extra.collapseSidebar();
+    AFRI.extra.autoScroll();
+    AFRI.extra.addMore();
+    AFRI.extra.removeParent();
+    AFRI.extra.selectHideShow();
+    AFRI.extra.plusMinus();
+    AFRI.extra.hovCategoryMenu();
+    AFRI.extra.trimAppUrl();
+    AFRI.extra.acceptCookie();
+    AFRI.extra.setSession();
+    AFRI.extra.showSessionPopup()
 
-    AIZ.plugins.metismenu();
-    AIZ.plugins.bootstrapSelect();
-    AIZ.plugins.tagify();
-    AIZ.plugins.textEditor();
-    AIZ.plugins.tooltip();
-    AIZ.plugins.countDown();
-    AIZ.plugins.dateRange();
-    AIZ.plugins.timePicker();
-    AIZ.plugins.fooTable();
-    AIZ.plugins.slickCarousel();
-    AIZ.plugins.noUiSlider();
-    AIZ.plugins.zoom();
-    AIZ.plugins.jsSocials();
+    AFRI.plugins.metismenu();
+    AFRI.plugins.bootstrapSelect();
+    AFRI.plugins.tagify();
+    AFRI.plugins.textEditor();
+    AFRI.plugins.tooltip();
+    AFRI.plugins.countDown();
+    AFRI.plugins.dateRange();
+    AFRI.plugins.timePicker();
+    AFRI.plugins.fooTable();
+    AFRI.plugins.slickCarousel();
+    AFRI.plugins.noUiSlider();
+    AFRI.plugins.zoom();
+    AFRI.plugins.jsSocials();
 
     // initialization of aiz uploader
-    AIZ.uploader.initForInput();
-    AIZ.uploader.removeAttachment();
-    AIZ.uploader.previewGenerate();
+    AFRI.uploader.initForInput();
+    AFRI.uploader.removeAttachment();
+    AFRI.uploader.previewGenerate();
 
     // $(document).ajaxComplete(function(){
-    //     AIZ.plugins.bootstrapSelect('refresh');
+    //     AFRI.plugins.bootstrapSelect('refresh');
     // });
 
 })(jQuery);

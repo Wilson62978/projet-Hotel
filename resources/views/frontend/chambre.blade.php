@@ -21,17 +21,19 @@
         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
             <div class="room-item shadow rounded overflow-hidden">
                 <div class="position-relative">
-                    <img class="img-fluid" src="{{ asset($chambre->thumbnail_img) }}" alt="">
+                    <img class="img-fluid" src="{{ asset(Storage::url($chambre->thumbnail_img)) }}" alt="">
                     <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">{{ number_format($chambre->price,0,""," ") }} XOF/Semaine</small>
                 </div>
                 <div class="p-4 mt-2">
                     <div class="mb-3">
                         @if (stristr($chambre->name,'premier') != false)
-                        <span class="h5 mb-0 fs-12 text-uppercase">{{explode('premier', $chambre->name)[0]}}</span>
-                        <span class="mb-0 ">1 <sup>er</sup> étage</span>
+                            <span class="h5 mb-0 fs-12 text-uppercase">{{explode('premier', $chambre->name)[0]}}</span>
+                            <span class="mb-0 ">1 <sup>er</sup> étage</span>
                         @elseif (stristr($chambre->name,'deuxième ') != false)
                             <span class="h5 mb-0 text-uppercase">{{explode('deuxième', $chambre->name)[0]}}</span>
                             <span class="mb-0 ">2 <sup>eme</sup> étage</span>
+                        @else
+                            <span class="h5 mb-0 fs-12 text-uppercase">{{ $chambre->name }}</span>
                         @endif
                     </div>
                     <div class="d-flex mb-3">
@@ -39,7 +41,7 @@
                         <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>Salles de bain</small>
                         <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
                     </div>
-                    <p class="text-body mb-3 text-truncate-3">{{ $chambre->description }}</p>
+                    <p class="text-body mb-3 text-truncate-3">{!! $chambre->description !!}</p>
                     <div class="d-flex justify-content-between">
                         <a class="btn btn-sm btn-primary rounded py-2 px-4" href="{{ route('chambres.first', ['slug' => $chambre->slug]) }}">Voir Plus</a>
                         <a class="btn btn-sm btn-dark rounded py-2 px-4" href="{{ route('chambres.first', ['slug' => $chambre->slug]) }}">Reserver</a>

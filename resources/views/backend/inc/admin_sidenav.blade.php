@@ -19,9 +19,25 @@
                         <i class="las la-user-friends side-nav-icon"></i>
                         <span class="side-nav-text">{{('Demandes de cotations')}}</span>
                     </a>
+                </li>  <li class="side-nav-item">
+                    <a href="#" class="side-nav-link">
+                        <i class="las la-shopping-cart side-nav-icon"></i>
+                        <span class="side-nav-text">Chambre</span>
+                        <span class="side-nav-arrow"></span>
+                    </a>
+                    <ul class="side-nav-list level-2">
+                        <li class="side-nav-item">
+                            <a class="side-nav-link {{ activeRoutes(['chambre.create'])}}" href="{{route('chambre.create')}}">
+                                <span class="side-nav-text">Ajouter une chambre</span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="{{route('chambre.index')}}" class="side-nav-link {{ activeRoutes(['chambre.index'])}}">
+                                <span class="side-nav-text">Les Chambre</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-
-               
                 
                 <li class="side-nav-item">
                     <a href="#" class="side-nav-link" aria-expanded="false">
@@ -42,9 +58,15 @@
                         </li>
                     </ul>
                 </li>
-                
-            </ul><!-- .side-nav -->
-        </div><!-- .side-nav-wrap -->
-    </div><!-- .sidebar -->
+
+                <li class="side-nav-item">
+                    <a href="{{ route('uploaded-files.index') }}" class="side-nav-link {{ activeRoutes(['uploaded-files.create'])}}">
+                        <i class="las la-folder-open side-nav-icon"></i>
+                        <span class="side-nav-text">Fichiers téléchargés</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="sidebar-overlay"></div>
-</div><!-- .sidebar -->
+</div>
