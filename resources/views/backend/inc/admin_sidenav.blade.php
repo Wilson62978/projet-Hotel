@@ -13,13 +13,20 @@
                         <span class="side-nav-text">{{('Dashboard')}}</span>
                     </a>
                 </li>
+                <li class="side-nav-item">
+                    <a href="{{ route('reservations.index') }}" class="side-nav-link">
+                        <i class="las la-money-bill side-nav-icon"></i>
+                        <span class="side-nav-text">{{('Reservations')}}</span>
+                    </a>
+                </li>  
 
                 <li class="side-nav-item">
                     <a href="{{ route('demandes.index') }}" class="side-nav-link">
-                        <i class="las la-user-friends side-nav-icon"></i>
+                        <i class="las la-question-circle side-nav-icon"></i>
                         <span class="side-nav-text">{{('Demandes de cotations')}}</span>
                     </a>
-                </li>  <li class="side-nav-item">
+                </li>  
+                <li class="side-nav-item">
                     <a href="#" class="side-nav-link">
                         <i class="las la-shopping-cart side-nav-icon"></i>
                         <span class="side-nav-text">Chambre</span>

@@ -12,6 +12,7 @@ class Reservations extends Model
     protected $fillable = [
         "methodePayement_id",
         "user_id","chambre_id", "dateDebut", "dateFin", "montant", "nom", "prenom",
-        "email", "numero", "nationalite_id", "dateExpiration", "nomTitulaire", "cvvCvc", "numeroCarte"
+        "email", "numero", "nationalite_id", "dateExpiration", "nomTitulaire", "cvvCvc", "numeroCarte",
+        "montantExact","tva"
     ];
 }

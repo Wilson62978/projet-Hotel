@@ -24,7 +24,7 @@ Route::get('/chambres/{slug}', [HomeController::class, 'firstChambre'])
     ->name('chambres.first');
 
 Route::get('chambre-checkout/{id}', [HomeController::class, 'checkout'])
-    ->name('chambre.checkout');
+    ->name('chambres.checkout');
 
 Route::get('/reserver-chambres', [HomeController::class, 'booknow'])
     ->name('reserver');

@@ -74,6 +74,8 @@ class Checkout extends Component
             "dateDebut"=>Date::createFromFormat("d-m-Y",session()->get('date_start')),
             "dateFin"=>  Date::createFromFormat("d-m-Y",session()->get('date_end')),
             "montant"=>session()->get('price_ttc'),
+            "tva"=>session()->get('tva'),
+            "montantExact"=>session()->get("price"),
             "nom"=>$this->nom,
             "prenom"=>$this->prenom,
             "email"=>$this->email,

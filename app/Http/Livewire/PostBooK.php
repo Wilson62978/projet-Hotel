@@ -43,7 +43,7 @@ class PostBooK extends Component
         $price_ttc =  $price_reduction + $tva;
 
         session(compact('chambre', 'date_start', 'date_end', 'price', 'total_week',"tva", "reduction", "pourcentage", 'price_ttc', "price_reduction"));
-        return redirect()->route("chambre.checkout", ["id" => $chambre->id]);
+        return redirect()->route("chambres.checkout", ["id" => $chambre->id]);
     }
 
 

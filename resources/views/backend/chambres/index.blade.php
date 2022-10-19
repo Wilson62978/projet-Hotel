@@ -163,7 +163,9 @@
             }
             $.post('{{ route('chambre.published') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
                 if(data.status){
-                    AFRI.plugins.notify('success', data.msg);
+                    setInterval(() => {
+                            location.reload();
+                        }, 5000);
                 }
                 else{
                     AFRI.plugins.notify('danger', 'Quelque chose s\'est mal passé lors du traitement des données');

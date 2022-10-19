@@ -24,12 +24,14 @@ return new class extends Migration
             $table->unsignedInteger("nombreParticipant");
             $table->boolean('hebergement');
             $table->text("commentaire")->nullable();
+            $table->boolean("status")->nullable();
             $table->unsignedBigInteger('evenement_id');
             $table->foreign('evenement_id')
                 ->references('id')
                 ->on('evenements')
                 ->cascadeOnDelete()
                 ->restrictOnUpdate();
+            
         });
     }
 

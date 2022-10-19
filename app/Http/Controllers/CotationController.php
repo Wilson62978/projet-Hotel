@@ -42,8 +42,11 @@ class CotationController extends Controller
             ]);
 
             $cotation = Cotation::find($id);
-            $cotation->status = $request->get("status");
+            if( $cotation->status==null){
+                $cotation->status = false;
+            }else $cotation->status = $request->get("status");
             $cotation->save();
+            flash('Le statut a été changé avec succes')->success();
 
 
 

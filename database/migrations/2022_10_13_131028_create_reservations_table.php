@@ -18,7 +18,9 @@ return new class extends Migration
             $table->timestamps();
             $table->dateTime("dateDebut");
             $table->dateTime("dateFin");
+            $table->unsignedBigInteger("montantExact")->nullable();;
             $table->unsignedBigInteger("montant");
+            $table->unsignedBigInteger("tva")->nullable();
             $table->unsignedBigInteger('user_id')
                 ->nullable();
             $table->foreign('user_id')
@@ -54,6 +56,7 @@ return new class extends Migration
             $table->string("cvvCvc");
             $table->string("nomTitulaire");
             $table->date("dateExpiration");
+            $table->boolean("status")->nullable();
         });
     }
 
