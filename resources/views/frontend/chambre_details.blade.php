@@ -1,16 +1,123 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div class="container-fluid page-header mt-5 mb-5 p-0" style="background-image: url({{asset('assets/img/carousel-1.jpg')}});">
+    {{-- <div class="container-fluid page-header mt-5 mb-5 p-0" style="background-image: url({{asset('assets/img/carousel-1.jpg')}});">
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center pb-5">
                 <br><br>
                 <h1 class="display-5 text-white mb-3 animated slideInDown">{{ $chambre->name }}</h1>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="container mt-5 mb-lg-5 mb-4 pb-lg-5">
+    <section class="banner_area">
+        <div class="container">
+            <div class="banner_inner_content">
+                <h3>{{ $chambre->name }}</h3>
+                <ul>
+                    <li class="active"><a href="index.html">Accueil</a></li>
+                    <li><a href="search.html">Chambres</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="room_details_area">
+        <div class="container">
+            <div class="row room_details_inner">
+                <div class="col-md-8">
+                    <div class="room_details_content">
+                        <div class="room_d_main_text">
+                            <div class="room_details_img owl-carousel">
+                                @foreach($chambre->photos as $photo)
+                                    <div class="item">
+                                        <img src="{{ asset(Storage::url($photo->file_name)) }}" alt="">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <h4>{{ $chambre->name }}</h4>
+                            <h5>{{ number_format($chambre->price, 0, '', ' ') }} FCFA <span>/ Nuit</span></h5>
+                            <p>
+                                {!! $chambre->description !!}
+                            </p>
+                        </div>
+                        <div class="room_service_list">
+                            <h3 class="room_d_title">Équipements</h3>
+                            <div class="row room_service_list_inner">
+                                <div class="col-sm-5 col-md-offset-right-1">
+                                    <div class="resot_list">
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Non fumeur</a></li>
+                                            <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Climatiseur</a></li>
+                                            <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Mini bar</a></li>
+                                            <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Coffre Fort</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-md-offset-right-1">
+                                    <div class="resot_list">
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Douche</a></li>
+                                            <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Seche Cheveux</a></li>
+                                            <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Baignoire</a></li>
+                                            <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Télévision à écran plat</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="search_right_sidebar">
+                        {{-- <div class="book_room_area">
+                            <div class="book_room_box">
+                                <div class="book_table_item">
+                                    <h3>check availability</h3>
+                                </div>
+                                <div class="book_table_item">
+                                    <div class="input-append date form_datetime">
+                                        <input size="16" type="text" value="" readonly placeholder="Arrival Date">
+                                        <span class="add-on"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
+                                <div class="book_table_item">
+                                    <div class="input-append date form_datetime">
+                                        <input size="16" type="text" value="" readonly placeholder="Departure Date">
+                                        <span class="add-on"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
+                                <div class="book_table_item">
+                                    <select class="selectpicker">
+                                        <option>Adults</option>
+                                        <option>Adults</option>
+                                        <option>Adults</option>
+                                    </select>
+                                </div>
+                                <div class="book_table_item">
+                                    <select class="selectpicker">
+                                        <option>Children</option>
+                                        <option>Children</option>
+                                        <option>Children</option>
+                                    </select>
+                                </div>
+                                <div class="book_table_item">
+                                    <a class="book_now_btn" href="#">Reserve now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book_now_button">
+                            <a class="book_now_btn_black" href="#">Book now</a>
+                        </div> --}}
+
+                        <livewire:post-boo-k :chambre="$chambre">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- <div class="container mt-5 mb-lg-5 mb-4 pb-lg-5">
         <div class="row g-5">
             <div class="col-lg-7">
                 <div class="d-flex flex-column">
@@ -78,5 +185,5 @@
                 <livewire:post-boo-k :chambre="$chambre">
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection

@@ -13,7 +13,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $chambres = Chambre::where('published', 1)->limit(3)->get();
+        $chambres = Chambre::select('chambres.*',  'u.file_name as thumbnail_img')
+            ->leftjoin('uploads as u', 'chambres.thumbnail_img', '=', 'u.id')
+            ->orderBy('chambres.created_at','desc')
+            ->where('published', 1)
+            ->limit(3)
+            ->get();
 
         return view('frontend.index', compact('chambres'));
     }
